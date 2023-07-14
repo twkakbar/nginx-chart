@@ -322,7 +322,7 @@ controller:
 
     httpPort:
       ## Enables the HTTP port for the Ingress Controller service.
-      enable: true
+      enable: false
 
       ## The HTTP port of the Ingress Controller service.
       port: 80
