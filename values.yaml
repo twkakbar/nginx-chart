@@ -209,7 +209,7 @@ controller:
   ## The Ingress Controller only processes resources that belong to its class - i.e. have the "ingressClassName" field resource equal to the class.
 
   ## The Ingress Controller processes all the resources that do not have the "ingressClassName" field for all versions of kubernetes.
-  ingressClass: nginx-fe
+  ingressClass: nginx-be
 
   ## New Ingresses without an ingressClassName field specified will be assigned the class specified in `controller.ingressClass`.
   setAsDefaultIngress: false
@@ -296,7 +296,7 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
       service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https
       service.beta.kubernetes.io/aws-load-balancer-redirect-http-to-https: "true"
-      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "60"
+      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "180"
       
 
     ## The extra labels of the service.
@@ -325,7 +325,7 @@ controller:
 
     httpPort:
       ## Enables the HTTP port for the Ingress Controller service.
-      enable: false
+      enable: true
 
       ## The HTTP port of the Ingress Controller service.
       port: 80
