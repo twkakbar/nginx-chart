@@ -12,7 +12,7 @@ controller:
   nginxplus: false
 
   # Timeout in milliseconds which the Ingress Controller will wait for a successful NGINX reload after a change or at the initial start.
-  nginxReloadTimeout: 60000
+  nginxReloadTimeout: 180000
 
   ## Support for App Protect WAF
   appprotect:
