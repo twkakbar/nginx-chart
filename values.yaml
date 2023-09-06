@@ -12,7 +12,7 @@ controller:
   nginxplus: false
 
   # Timeout in milliseconds which the Ingress Controller will wait for a successful NGINX reload after a change or at the initial start.
-  nginxReloadTimeout: 180000
+  nginxReloadTimeout: 300000
 
   ## Support for App Protect WAF
   appprotect:
@@ -79,7 +79,15 @@ controller:
     annotations: {}
 
     ## The entries of the ConfigMap for customizing NGINX configuration.
-    entries: {}
+    entries:
+      proxy-connect-timeout: "180s"
+      proxy-read-timeout: "180s"
+      proxy-send-timeout: "180s"
+      server-snippets: |
+        limit_req_zone $binary_remote_addr zone=test:10m rate=10r/s;
+        location / {
+          limit_req zone=test burst=10 nodelay;
+        }
 
   ## It is recommended to use your own TLS certificates and keys
   defaultTLS:
@@ -296,7 +304,8 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
       service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https
       service.beta.kubernetes.io/aws-load-balancer-redirect-http-to-https: "true"
-      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "180"
+      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
+      service.beta.kubernetes.io/aws-load-balancer-connection-draining-timeout: "300"
       
 
     ## The extra labels of the service.
