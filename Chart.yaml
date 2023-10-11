@@ -10,8 +10,8 @@ kubeVersion: '>= 1.22.0-0'
 maintainers:
 - email: kubernetes@nginx.com
   name: nginxinc
-name: nginx-ingress
+name: nginx-chart
 sources:
 - https://github.com/nginxinc/kubernetes-ingress/tree/v3.1.1/deployments/helm-chart
 type: application
-version: 0.17.1
+version: 0.1.1

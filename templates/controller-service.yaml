@@ -60,6 +60,15 @@ spec:
     nodePort: {{ .Values.controller.service.httpsPort.nodePort }}
   {{- end }}
 {{- end }}
+{{- if .Values.controller.service.grafanaPort.enable }}
+  - port: {{ .Values.controller.service.grafanaPort.port }}
+    targetPort: {{ .Values.controller.service.grafanaPort.targetPort }}
+    protocol: TCP
+    name: grafana
+  {{- if eq .Values.controller.service.type "NodePort" }}
+    nodePort: {{ .Values.controller.service.grafanaPort.nodePort }}
+  {{- end }}
+{{- end }}
   selector:
     {{- include "nginx-ingress.selectorLabels" . | nindent 4 }}
   {{- if .Values.controller.service.externalIPs }}

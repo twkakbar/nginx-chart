@@ -12,7 +12,7 @@ controller:
   nginxplus: false
 
   # Timeout in milliseconds which the Ingress Controller will wait for a successful NGINX reload after a change or at the initial start.
-  nginxReloadTimeout: 300000
+  nginxReloadTimeout: 60000
 
   ## Support for App Protect WAF
   appprotect:
@@ -33,7 +33,6 @@ controller:
     maxDaemons: 0
     ## RAM memory size to consume in MB.
     memory: 0
-    
 
   ## Enables the Ingress Controller pods to use the host's network namespace.
   hostNetwork: false
@@ -79,15 +78,7 @@ controller:
     annotations: {}
 
     ## The entries of the ConfigMap for customizing NGINX configuration.
-    entries:
-      proxy-connect-timeout: "180s"
-      proxy-read-timeout: "180s"
-      proxy-send-timeout: "180s"
-      server-snippets: |
-        limit_req_zone $binary_remote_addr zone=test:10m rate=10r/s;
-        location / {
-          limit_req zone=test burst=10 nodelay;
-        }
+    entries: {}
 
   ## It is recommended to use your own TLS certificates and keys
   defaultTLS:
@@ -217,7 +208,7 @@ controller:
   ## The Ingress Controller only processes resources that belong to its class - i.e. have the "ingressClassName" field resource equal to the class.
 
   ## The Ingress Controller processes all the resources that do not have the "ingressClassName" field for all versions of kubernetes.
-  ingressClass: nginx-be
+  ingressClass: nginx
 
   ## New Ingresses without an ingressClassName field specified will be assigned the class specified in `controller.ingressClass`.
   setAsDefaultIngress: false
@@ -297,16 +288,7 @@ controller:
     externalTrafficPolicy: Local
 
     ## The annotations of the Ingress Controller service.
-    annotations: 
-      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-southeast-3:960759735539:certificate/8e16447f-0725-4a50-b8fc-161bb7324859
-      service.beta.kubernetes.io/aws-load-balancer-type: nlb
-      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
-      service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https
-      service.beta.kubernetes.io/aws-load-balancer-redirect-http-to-https: "true"
-      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
-      service.beta.kubernetes.io/aws-load-balancer-connection-draining-timeout: "300"
-      
+    annotations: {}
 
     ## The extra labels of the service.
     extraLabels: {}
@@ -356,7 +338,7 @@ controller:
       # nodePort: 443
 
       ## The HTTPS port on the POD where the Ingress Controller service is running.
-      targetPort: 80
+      targetPort: 443
 
     ## A list of custom ports to expose through the Ingress Controller service. Follows the conventional Kubernetes yaml syntax for service ports.
     customPorts: []
